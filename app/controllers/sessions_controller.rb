@@ -3,14 +3,14 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.find_by(email: params[:session][:email].downcase)
+    @user = User.find_by(email: params[:session][:email].downcase)
     # ユーザーがデータベース内に存在し、かつ、認証に成功した場合
-    if user&.authenticate(params[:session][:password])
+    if @user && @user&.authenticate(params[:session][:password])
       # ユーザーログイン後にユーザー情報のページへリダイレクトする
-      reset_session #ログイン前に固定セッションをリセットする
-      params[:session][:remember_me] == '1' ? remember(user) : forget(user)
-      log_in user
-      redirect_to user
+      # reset_session #ログイン前に固定セッションをリセットする
+      log_in @user
+      params[:session][:remember_me] == '1' ? remember(@user) : forget(@user)
+      redirect_to @user
     else
       # エラーメッセージを表示する 
       flash.now[:danger] = "Invalid email/password combination" #本当は正しくない
