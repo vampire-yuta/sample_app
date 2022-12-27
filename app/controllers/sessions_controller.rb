@@ -6,13 +6,20 @@ class SessionsController < ApplicationController
     @user = User.find_by(email: params[:session][:email].downcase)
     # ユーザーがデータベース内に存在し、かつ、認証に成功した場合
     if @user && @user&.authenticate(params[:session][:password])
-      forwarding_url = session[:forwarding_url]
-      # ユーザーログイン後にユーザー情報のページへリダイレクトする
-      reset_session #ログイン前に固定セッションをリセットする
-      log_in @user
-      params[:session][:remember_me] == '1' ? remember(@user) : forget(@user)
-      # redirect_to @user
-      redirect_to forwarding_url || @user
+      if @user.activated?
+        forwarding_url = session[:forwarding_url]
+        # ユーザーログイン後にユーザー情報のページへリダイレクトする
+        reset_session #ログイン前に固定セッションをリセットする
+        params[:session][:remember_me] == '1' ? remember(@user) : forget(@user)
+        # redirect_to @user
+        log_in @user
+        redirect_to forwarding_url || @user
+      else
+        message = "Account not activated. "
+        message += "Check your email for the activation link."
+        flash[:warning] = message
+        redirect_to root_url
+      end
     else
       # エラーメッセージを表示する 
       flash.now[:danger] = "Invalid email/password combination" #本当は正しくない
