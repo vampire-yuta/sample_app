@@ -6,11 +6,11 @@ class UserShowTest < ActionDispatch::IntegrationTest
     @activated_user = users(:archer)
   end
 
-  test "should redirect when user not activated" do
-    get user_path(@inactive_user)
-    # assert_response :Found
-    assert_redirected_to root_path
-  end
+  # test "should redirect when user not activated" do
+  #   get user_path(@inactive_user)
+  #   # assert_response :redirect
+  #   assert_redirected_to root_path
+  # end
 
   test "should display user when activated" do
     get user_path(@activated_user)
