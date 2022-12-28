@@ -1,14 +1,13 @@
 class PasswordResetsController < ApplicationController
   before_action :get_user,         only: [:edit, :update]
   before_action :valid_user,       only: [:edit, :update]
-  before_action :check_expiration, only: [:edit, :update]
+  before_action :check_expiration, only: [:edit, :update]    # （1）への対応
 
   def new
   end
 
   def create
-    # @user = User.find_by(email: params[:password_reset][:email].downcase)
-    @user = User.find(102)
+    @user = User.find_by(email: params[:password_reset][:email].downcase)
     if @user
       @user.create_reset_digest
       @user.send_password_reset_email
@@ -24,16 +23,16 @@ class PasswordResetsController < ApplicationController
   end
 
   def update
-    if params[:user][:password].empty?
+    if params[:user][:password].empty?                  # （3）への対応
       @user.errors.add(:password, "can't be empty")
       render 'edit', status: :unprocessable_entity
-    elsif @user.update(user_params)
+    elsif @user.update(user_params)                     # （4）への対応
       reset_session
       log_in @user
-      flash[:success] = 'Password has been reset.'
+      flash[:success] = "Password has been reset."
       redirect_to @user
     else
-      render 'edit', status: :unprocessable_entity
+      render 'edit', status: :unprocessable_entity      # （2）への対応
     end
   end
 
@@ -43,20 +42,21 @@ class PasswordResetsController < ApplicationController
       params.require(:user).permit(:password, :password_confirmation)
     end
 
-    # Before filter
+    # beforeフィルタ
+
     def get_user
       @user = User.find_by(email: params[:email])
     end
 
-    # Check correct user
+    # 有効なユーザーかどうか確認する
     def valid_user
       unless (@user && @user.activated? &&
-          @user.authenticated?(:reset, params[:id]))
+              @user.authenticated?(:reset, params[:id]))
         redirect_to root_url
       end
     end
 
-    # Check token expiration
+    # トークンが期限切れかどうか確認する
     def check_expiration
       if @user.password_reset_expired?
         flash[:danger] = "Password reset has expired."
