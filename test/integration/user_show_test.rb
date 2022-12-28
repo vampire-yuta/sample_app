@@ -8,7 +8,7 @@ class UserShowTest < ActionDispatch::IntegrationTest
 
   # test "should redirect when user not activated" do
   #   get user_path(@inactive_user)
-  #   # assert_response :redirect
+  #   assert_response :unprocessable_entity
   #   assert_redirected_to root_path
   # end
 
