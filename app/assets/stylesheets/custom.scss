@@ -2,6 +2,7 @@
 @import "bootstrap";
 
 /* mixins, variables, etc. */
+
 $gray-medium-light: #eaeaea;
 
 @mixin box_sizing {
@@ -11,6 +12,7 @@ $gray-medium-light: #eaeaea;
 }
 
 /* universal */
+
 body {
   padding-top: 60px;
 }
@@ -57,19 +59,20 @@ p {
   line-height: 1.7em;
 }
 
+
 /* header */
 
 #logo {
   float: left;
   margin-right: 10px;
   font-size: 1.7em;
-  color: #white;
+  color: white;
   text-transform: uppercase;
   letter-spacing: -1px;
   padding-top: 9px;
   font-weight: bold;
   &:hover {
-    color: #white;
+    color: white;
     text-decoration: none;
   }
 }
@@ -82,9 +85,9 @@ footer {
   border-top: 1px solid $gray-medium-light;
   color: $gray-light;
   a {
-    color: #gray;
+    color: $gray;
     &:hover {
-      color: #222;
+      color: $gray-darker;
     }
   }
   small {
@@ -99,6 +102,7 @@ footer {
     }
   }
 }
+
 @media (max-width: 800px) {
   footer {
     small {
@@ -119,7 +123,7 @@ footer {
 
 /* miscellaneous */
 
-.dubug_dump {
+.debug_dump {
   clear: both;
   float: left;
   width: 100%;
@@ -130,7 +134,7 @@ footer {
 
 aside {
   section.user_info {
-    margin-top: 20px
+    margin-top: 20px;
   }
   section {
     padding: 10px 0;
@@ -149,7 +153,7 @@ aside {
       text-align: left;
       letter-spacing: -1px;
       margin-bottom: 3px;
-      margin-top: 8px;
+      margin-top: 0px;
     }
   }
 }
@@ -206,12 +210,13 @@ input {
 }
 
 /* Dropdown menu */
+
 .dropdown-menu.active {
   display: block;
 }
 
-
 /* Users index */
+
 .users {
   list-style: none;
   margin: 0;

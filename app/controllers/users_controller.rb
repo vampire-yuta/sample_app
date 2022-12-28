@@ -4,12 +4,11 @@ class UsersController < ApplicationController
   before_action :admin_user,     only: :destroy
 
   def index
-    @users = User.where(activated: true).paginate(page: params[:page])
+    @users = User.paginate(page: params[:page])
   end
 
   def show
     @user = User.find(params[:id])
-    redirect_to root_url and return unless @user.activated?
   end
 
   def new
@@ -28,13 +27,10 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
   end
 
   def update
-    @user = User.find(params[:id])
     if @user.update(user_params)
-      # 更新に成功した場合を扱う
       flash[:success] = "Profile updated"
       redirect_to @user
     else
@@ -49,10 +45,13 @@ class UsersController < ApplicationController
   end
 
   private
+
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation)
+      params.require(:user).permit(:name, :email, :password,
+                                   :password_confirmation)
     end
 
+    # beforeフィルタ
 
     # ログイン済みユーザーかどうか確認
     def logged_in_user
@@ -69,7 +68,7 @@ class UsersController < ApplicationController
       redirect_to(root_url, status: :see_other) unless current_user?(@user)
     end
 
-    # Check admin user
+    # 管理者かどうか確認
     def admin_user
       redirect_to(root_url, status: :see_other) unless current_user.admin?
     end
