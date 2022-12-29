@@ -85,6 +85,10 @@ class User < ApplicationRecord
     UserMailer.password_reset(self).deliver_now
   end
 
+  def feed
+    Micropost.where("user_id = ?", id)
+  end
+
   private
 
     # Mail address to be all downcase
