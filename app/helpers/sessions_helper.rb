@@ -38,7 +38,7 @@ module SessionsHelper
   def logged_in?
     !current_user.nil?
   end
-  
+
   # 永続的セッションを破棄する
   def forget(user)
     user.forget
@@ -52,6 +52,7 @@ module SessionsHelper
     reset_session
     @current_user = nil # 安全のため
   end
+  
 
   # アクセスしようとしたURLを保存する
   def store_location
