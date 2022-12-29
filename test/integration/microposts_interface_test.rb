@@ -49,3 +49,23 @@ class MicropostsInterfaceTest < MicropostsInterface
     assert_select 'a', { text: 'delete', count: 0 }
   end
 end
+
+class MicropostSidebarTest < MicropostsInterface
+
+  test "should display the right micropost count" do
+   get root_path
+   assert_match "#{ Micropost.count - 3 } microposts", response.body # ??
+  end
+  
+  test "should user properr pluralization for zero microposts" do
+    log_in_as(users(:malory))
+    get root_path
+    assert_match "0 microposts", response.body
+  end
+
+  test "should user proper pluralization for one micropost" do
+    log_in_as(users(:lana))
+    get root_path
+    assert_match "1 micropost", response.body
+  end
+end
