@@ -2,8 +2,7 @@
 # exit on error
 set -o errexit
 
-rm tmp/cache/bootsnap-load-path-cache
-rm -rf tmp/cache/bootsnap
+rm -rf tmp/cache/
 
 bundle install
 bundle exec rails assets:precompile
