@@ -73,11 +73,19 @@ Rails.application.configure do
   ActionMailer::Base.smtp_settings = {
     :port           => 587,
     :address        => 'smtp.mailgun.org',
-    :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
-    :password       => ENV['MAILGUN_SMTP_PASSWORD'],
+    :user_name      => 'postmaster@sandbox86ca8147239149b08d308ce14ea31254.mailgun.org',
+    :password       => 'd597ee2e2595ac724701949706924d40-c2efc90c-0dc0e74f',
     :domain         => host,
     :authentication => :plain,
   }
+  # ActionMailer::Base.smtp_settings = {
+  #   :port           => 587,
+  #   :address        => 'smtp.mailgun.org',
+  #   :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
+  #   :password       => ENV['MAILGUN_SMTP_PASSWORD'],
+  #   :domain         => host,
+  #   :authentication => :plain,
+  # }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
